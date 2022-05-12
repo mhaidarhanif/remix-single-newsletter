@@ -1,6 +1,6 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -29,18 +29,34 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Newsletter() {
   const actionData = useActionData();
-  const state: "idle" | "success" | "error" = actionData?.subscription
-    ? "success"
-    : actionData?.error
-    ? "error"
-    : "idle";
+  const transition = useTransition();
+
+  // Example without transition
+  // const reloadDocument = true
+  // const state: "idle" | "success" | "error" = actionData?.subscription
+  //   ? "success"
+  //   : actionData?.error
+  //   ? "error"
+  //   : "idle";
+
+  // Example with transition
+  const state: "idle" | "success" | "error" | "submitting" =
+    transition?.submission
+      ? "submitting"
+      : actionData?.subcription
+      ? "success"
+      : actionData?.error
+      ? "error"
+      : "idle";
+
+  console.log({ state });
 
   return (
     <main className="box">
       <Form method="post" aria-hidden={state === "success"}>
         <h2>Subscribe to our newsletter</h2>
         <p>Keep up to date with our updates to your inbox.</p>
-        <fieldset>
+        <fieldset disabled={state === "submitting"}>
           <input
             name="email"
             type="email"
@@ -48,12 +64,12 @@ export default function Newsletter() {
             placeholder="you@example.com"
             required
           />
-          <button type="submit">Subscribe</button>
+          <button type="submit">
+            {state === "submitting" ? "Subscribing..." : "Subscribe"}
+          </button>
         </fieldset>
 
-        <p>
-          {(actionData?.error && actionData?.message) ?? <span>&nbsp;</span>}
-        </p>
+        <p>{state === "error" ? actionData?.message : <span>&nbsp;</span>}</p>
       </Form>
 
       <div aria-hidden={state !== "success"}>
