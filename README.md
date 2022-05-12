@@ -1,8 +1,10 @@
 # Remix Single: Newsletter Signup Form
 
-More polished example on the newsletter form with Remix and ConvertKit.
+More polished example on the newsletter form with Remix and ConvertKit. Everything lives in `routes/newsletter.tsx`.
 
-Video: https://www.youtube.com/watch?v=jd_bin5HPrw
+- Live demo: https://remix-single-newsletter.vercel.app
+- YouTube Video: https://www.youtube.com/watch?v=jd_bin5HPrw
+- Original code: https://github.com/remix-run/remix/tree/main/examples/newsletter-signup
 
 ## Documentation
 
