@@ -1,6 +1,6 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -28,6 +28,8 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Newsletter() {
+  const actionData = useActionData();
+
   return (
     <main className="box">
       <Form method="post">
@@ -43,6 +45,10 @@ export default function Newsletter() {
           />
           <button type="submit">Subscribe</button>
         </fieldset>
+
+        <p>
+          {(actionData?.error && actionData?.message) ?? <span>&nbsp;</span>}
+        </p>
       </Form>
     </main>
   );
