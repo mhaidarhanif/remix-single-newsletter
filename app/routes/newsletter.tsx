@@ -1,6 +1,7 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, useActionData, useTransition } from "@remix-run/react";
+import { useEffect, useRef } from "react";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -57,6 +58,20 @@ export default function Newsletter() {
    * like transition?.submission because it will not get the "submitting" state
    */
 
+  /**
+   * Handle focus on error and select on idle
+   */
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (state === "error") {
+      inputRef.current?.focus();
+    }
+    if (state === "idle") {
+      inputRef.current?.select();
+    }
+  }, [state]);
+
   return (
     <main className="box">
       <Form method="post" aria-hidden={state === "success"}>
@@ -64,6 +79,7 @@ export default function Newsletter() {
         <p>Keep up to date with our updates to your inbox.</p>
         <fieldset disabled={state === "submitting"}>
           <input
+            ref={inputRef}
             name="email"
             type="email"
             id="newsletter-email"
