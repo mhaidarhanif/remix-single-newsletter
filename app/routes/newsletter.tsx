@@ -31,7 +31,9 @@ export default function Newsletter() {
   const actionData = useActionData();
   const transition = useTransition();
 
-  // Example without transition
+  /**
+   * Example without transition
+   */
   // const reloadDocument = true
   // const state: "idle" | "success" | "error" = actionData?.subscription
   //   ? "success"
@@ -39,17 +41,21 @@ export default function Newsletter() {
   //   ? "error"
   //   : "idle";
 
-  // Example with transition
+  /**
+   * Example with transition
+   */
   const state: "idle" | "success" | "error" | "submitting" =
-    transition?.submission
+    transition.submission
       ? "submitting"
-      : actionData?.subcription
+      : actionData?.subscription
       ? "success"
       : actionData?.error
       ? "error"
       : "idle";
-
-  console.log({ state });
+  /**
+   * Note: Do not use optional chaining in transition.submission
+   * like transition?.submission because it will not get the "submitting" state
+   */
 
   return (
     <main className="box">
