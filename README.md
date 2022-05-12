@@ -1,6 +1,21 @@
-# Welcome to Remix!
+# Remix Single: Newsletter Signup Form
+
+More polished example on the newsletter form with ConvertKit.
+
+Video: https://www.youtube.com/watch?v=jd_bin5HPrw
+
+## Documentation
 
 - [Remix Docs](https://remix.run/docs)
+
+## Development
+
+Copy `.env.example` to `.env` and edit the file:
+
+```sh
+CONVERTKIT_API_KEY=abcdefghijklmnop
+CONVERTKIT_FORM_ID=1234567
+```
 
 ## Deployment
 
