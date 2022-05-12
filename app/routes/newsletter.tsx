@@ -29,6 +29,11 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Newsletter() {
   const actionData = useActionData();
+  const state: "idle" | "success" | "error" = actionData?.subscription
+    ? "success"
+    : actionData?.error
+    ? "error"
+    : "idle";
 
   return (
     <main className="box">
@@ -49,6 +54,11 @@ export default function Newsletter() {
         <p>
           {(actionData?.error && actionData?.message) ?? <span>&nbsp;</span>}
         </p>
+
+        <div>
+          <h2>You're subscribed!</h2>
+          <p>Please check your inbox to confirm your subscription.</p>
+        </div>
       </Form>
     </main>
   );
