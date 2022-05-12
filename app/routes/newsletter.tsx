@@ -61,8 +61,10 @@ export default function Newsletter() {
   /**
    * Handle focus on error and select on idle
    * But do not select on the initial render
+   * Then move focus to success h2 when state is success
    */
   const inputRef = useRef<HTMLInputElement>(null);
+  const successRef = useRef<HTMLHeadingElement>(null);
   const mounted = useRef<boolean>(false);
 
   useEffect(() => {
@@ -72,17 +74,23 @@ export default function Newsletter() {
     if (state === "idle" && mounted.current) {
       inputRef.current?.select();
     }
+    if (state === "success") {
+      successRef.current?.focus();
+    }
 
     mounted.current = true;
   }, [state]);
 
   return (
     <main className="box">
-      <Form method="post" aria-hidden={state === "success"}>
+      {/* Do not create new entry in the history stack */}
+      <Form replace method="post" aria-hidden={state === "success"}>
         <h2>Subscribe to our newsletter</h2>
         <p>Keep up to date with our updates to your inbox.</p>
         <fieldset disabled={state === "submitting"}>
           <input
+            aria-label="Email address"
+            aria-describedby="error-message"
             ref={inputRef}
             name="email"
             type="email"
@@ -95,11 +103,15 @@ export default function Newsletter() {
           </button>
         </fieldset>
 
-        <p>{state === "error" ? actionData?.message : <span>&nbsp;</span>}</p>
+        <p id="error-message">
+          {state === "error" ? actionData?.message : <span>&nbsp;</span>}
+        </p>
       </Form>
 
       <div aria-hidden={state !== "success"}>
-        <h2>You're subscribed!</h2>
+        <h2 ref={successRef} tabIndex={-1}>
+          You're subscribed!
+        </h2>
         <p>Please check your inbox to confirm your subscription.</p>
         <Link to=".">Start over</Link>
       </div>
