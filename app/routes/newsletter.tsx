@@ -1,6 +1,6 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData } from "@remix-run/react";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -59,6 +59,7 @@ export default function Newsletter() {
       <div aria-hidden={state !== "success"}>
         <h2>You're subscribed!</h2>
         <p>Please check your inbox to confirm your subscription.</p>
+        <Link to=".">Start over</Link>
       </div>
     </main>
   );
