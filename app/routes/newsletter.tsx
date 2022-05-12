@@ -37,7 +37,7 @@ export default function Newsletter() {
 
   return (
     <main className="box">
-      <Form method="post">
+      <Form method="post" aria-hidden={state === "success"}>
         <h2>Subscribe to our newsletter</h2>
         <p>Keep up to date with our updates to your inbox.</p>
         <fieldset>
@@ -54,12 +54,12 @@ export default function Newsletter() {
         <p>
           {(actionData?.error && actionData?.message) ?? <span>&nbsp;</span>}
         </p>
-
-        <div>
-          <h2>You're subscribed!</h2>
-          <p>Please check your inbox to confirm your subscription.</p>
-        </div>
       </Form>
+
+      <div aria-hidden={state !== "success"}>
+        <h2>You're subscribed!</h2>
+        <p>Please check your inbox to confirm your subscription.</p>
+      </div>
     </main>
   );
 }
