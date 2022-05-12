@@ -1,6 +1,6 @@
 # Remix Single: Newsletter Signup Form
 
-More polished example on the newsletter form with ConvertKit.
+More polished example on the newsletter form with Remix and ConvertKit.
 
 Video: https://www.youtube.com/watch?v=jd_bin5HPrw
 
