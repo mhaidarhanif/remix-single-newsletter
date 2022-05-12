@@ -7,9 +7,24 @@ export const action: ActionFunction = async ({ request }) => {
 
   const email = formData.get("email");
 
-  console.log({ email });
+  const API_KEY = process.env.CONVERTKIT_API_KEY;
+  const FORM_ID = process.env.CONVERTKIT_FORM_ID;
+  const API_URL = `https://api.convertkit.com/v3`;
 
-  return json({});
+  const response = await fetch(`${API_URL}/forms/${FORM_ID}/subscribe`, {
+    method: "post",
+    body: JSON.stringify({
+      email,
+      api_key: API_KEY,
+    }),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+
+  const data = await response.json();
+
+  return json(data);
 };
 
 export default function Newsletter() {
@@ -24,6 +39,7 @@ export default function Newsletter() {
             type="email"
             id="newsletter-email"
             placeholder="you@example.com"
+            required
           />
           <button type="submit">Subscribe</button>
         </fieldset>
