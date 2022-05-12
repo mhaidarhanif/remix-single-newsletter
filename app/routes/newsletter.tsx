@@ -60,16 +60,20 @@ export default function Newsletter() {
 
   /**
    * Handle focus on error and select on idle
+   * But do not select on the initial render
    */
   const inputRef = useRef<HTMLInputElement>(null);
+  const mounted = useRef<boolean>(false);
 
   useEffect(() => {
     if (state === "error") {
       inputRef.current?.focus();
     }
-    if (state === "idle") {
+    if (state === "idle" && mounted.current) {
       inputRef.current?.select();
     }
+
+    mounted.current = true;
   }, [state]);
 
   return (
